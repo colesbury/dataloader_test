@@ -36,9 +36,9 @@ class Imagenet(datasets.ImageFolder):
             normalize,
         ]))
 
-    def __len__(self):
-        # Limit to first 10%
-        return round(super().__len__())
+    # def __len__(self):
+    #     # Limit to first 10%
+    #     return round(super().__len__() / 10)
 
 def main():
     args = parser.parse_args()
@@ -54,8 +54,6 @@ def main():
 
     # Thread safety
     Image.preinit()
-
-    # gc.set_debug(gc.DEBUG_STATS)
 
     for i, (sample, target) in enumerate(tqdm.tqdm(train_loader)):
         assert sample.is_pinned()

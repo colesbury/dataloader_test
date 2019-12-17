@@ -30,9 +30,9 @@ class Imagenet(datasets.ImageFolder):
             normalize,
         ]))
 
-    def __len__(self):
-        # Limit to first 10%
-        return round(super().__len__())
+    # def __len__(self):
+    #     # Limit to first 10%
+    #     return round(super().__len__() / 10)
 
 def main():
     args = parser.parse_args()

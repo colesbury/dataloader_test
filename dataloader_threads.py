@@ -5,6 +5,10 @@ import queue
 import sys
 import copy
 
+# This is copy-pasted from PyTorch's data loader with modifications:
+# 1) Use a pool of threads instead of processes
+# 2) Batch into pinned memory instead of shared memory
+
 try:
     import _atomic
 except ImportError:
@@ -65,9 +69,7 @@ def default_collate(batch):
         out = None
         shape = (len(batch),) + elem.shape
         out = torch.empty(shape, pin_memory=True)
-        r = torch.stack(batch, 0, out=out)
-        assert r.shape == shape
-        return r
+        return torch.stack(batch, 0, out=out)
     elif elem_type.__module__ == 'numpy' and elem_type.__name__ != 'str_' \
             and elem_type.__name__ != 'string_':
         elem = batch[0]
